@@ -31,7 +31,7 @@ end
 
 def write_output
     output = {rentals: []}
-    $rentals.each{|r| output[:rentals].push({id: r.id, price: r.price})}
+    $rentals.each{|r| output[:rentals].push({id: r.id, price: r.price, commission: r.commission})}
     File.open("#{$MAIN_ROOT}/data/actual_output.json",'w') do |f|
         f.write(output.to_json)
     end
