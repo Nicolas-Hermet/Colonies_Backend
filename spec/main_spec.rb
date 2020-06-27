@@ -1,5 +1,4 @@
 require_relative '../level1/main'
-require_relative '../level1/lib/car'
 
 describe 'Main create_cars_array_from_input' do
     it 'should not raise any error' do
@@ -46,9 +45,12 @@ describe 'Main car_from_its_id' do
 end
 
 describe 'Main write_output' do
+    create_cars_array_from_input
+    create_rentals_array_from_input
     returned_output = write_output
+    
     it 'has a returned value' do
-        expect(returned_output).not_to eq(NIL)
+        expect(returned_output).not_to eq(nil)
     end
 
     it 'returned value has rentals key' do
