@@ -48,7 +48,7 @@ describe 'Main write_output' do
     create_cars_array_from_input
     create_rentals_array_from_input
     returned_output = write_output
-    
+
     it 'has a returned value' do
         expect(returned_output).not_to eq(nil)
     end
@@ -70,6 +70,12 @@ describe 'Main write_output' do
                 expect(rental).to have_key(:price)
             end
         end
+
+        it 'has correct price' do
+            expect(rentals[0]).to eq({id: 1, price: 7000})
+            expect(rentals[1]).to eq({id: 2, price: 15500})
+            expect(rentals[2]).to eq({id: 3, price: 11250})
+        end
     end
 
     path_to_file = "#{$MAIN_ROOT}/data/actual_output.json"
@@ -81,5 +87,5 @@ describe 'Main write_output' do
     it 'output file is not empty' do
         expect(File.size(path_to_file)).to be > 0
     end
-
+    
 end
