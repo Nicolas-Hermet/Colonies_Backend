@@ -41,4 +41,13 @@ describe 'Rental objects' do
         expect(rental.commission[:assistance_fee]).to be(300) # 100 * number of days
         expect(rental.commission[:drivy_fee]).to be(690) # price(6600) * 0.3 * 0.5 - 100 * nb_of_days
     end
+
+    it 'can compute actions' do
+        random_index = rand(rental.actions.length - 1)
+        expect(rental.send(:set_actions)).to be_instance_of(Array)
+        expect(rental.actions[random_index]).to be_instance_of(Hash)
+        expect(rental.actions[0][:who]).to eq('driver')
+        expect(rental.actions[0][:type]).to eq('debit')
+        expect(rental.actions[0][:amount]).to be(6600)
+    end
 end
