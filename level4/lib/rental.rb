@@ -41,10 +41,10 @@ class Rental
     end
 
     def set_actions
-        @actions.push(Action.new("driver", "debit", @price.round))
-        @actions.push(Action.new("owner", "credit", (@price - @commission.values.sum).round))
-        @actions.push(Action.new("insurance", "credit", @commission[:insurance_fee].round))
-        @actions.push(Action.new("assistance", "credit", @commission[:assistance_fee].round))
-        @actions.push(Action.new("drivy", "credit", @commission[:drivy_fee].round))
+        @actions.push(Action.new("driver", "debit", @price.round).to_h)
+        @actions.push(Action.new("owner", "credit", (@price - @commission.values.sum).round).to_h)
+        @actions.push(Action.new("insurance", "credit", @commission[:insurance_fee].round).to_h)
+        @actions.push(Action.new("assistance", "credit", @commission[:assistance_fee].round).to_h)
+        @actions.push(Action.new("drivy", "credit", @commission[:drivy_fee].round).to_h)
     end
 end
