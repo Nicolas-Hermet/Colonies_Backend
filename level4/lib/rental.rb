@@ -1,7 +1,7 @@
 require 'date'
 
 class Rental
-    attr_reader :id, :car, :start_date, :end_date, :distance, :price, :commission
+    attr_reader :id, :car, :start_date, :end_date, :distance, :price, :commission, :actions
 
     def initialize id, car, start_date, end_date, distance
         @id = id 
@@ -10,9 +10,11 @@ class Rental
         @end_date = Date.parse(end_date)
         @duration = (@end_date - @start_date).to_i + 1
         @distance = distance
+        @actions = []
 
         set_price
         set_commission
+        set_actions
     end
 
     private
@@ -36,5 +38,13 @@ class Rental
         half_commission = (@price * 0.3 * 0.5).round
         assistance_fee = 100 * @duration
         @commission = {insurance_fee: half_commission, assistance_fee: assistance_fee, drivy_fee: half_commission - assistance_fee}
+    end
+
+    def set_actions
+        @actions.push(Action.new("driver", "debit", @price.round))
+        @actions.push(Action.new("owner", "credit", (@price - @commission.values.sum).round))
+        @actions.push(Action.new("insurance", "credit", @commission[:insurance_fee].round))
+        @actions.push(Action.new("assistance", "credit", @commission[:assistance_fee].round))
+        @actions.push(Action.new("drivy", "credit", @commission[:drivy_fee].round))
     end
 end
