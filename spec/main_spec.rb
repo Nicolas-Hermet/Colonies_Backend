@@ -58,31 +58,48 @@ describe 'Main write_output' do
 
     describe 'rentals array' do
         rentals = returned_output[:rentals]
-        it 'has three objects' do
+        it 'has three items' do
             expect(returned_output[:rentals].length).to be(3)
         end
-    
-        it 'has an id price, and commission key for each object' do
+
+        describe 'each rental and Action' do
             rentals.each do |rental|
-                expect(rental).to have_key(:id)
-                expect(rental).to have_key(:price)
-                expect(rental).to have_key(:commission)
-                expect(rental[:commission]).to have_key(:insurance_fee)
-                expect(rental[:commission]).to have_key(:assistance_fee)
-                expect(rental[:commission]).to have_key(:drivy_fee)
+                it 'has an id integer and an actions array of Actions for each item' do
+                    expect(rental).to have_key(:id)
+                    expect(rental[:id]).to be_instance_of(Integer)
+                    expect(rental).to have_key(:actions)
+                    expect(rental[:actions]).to be_instance_of(Array)
+                    expect(rental[:actions].length).to be(5)
+                end
+
+                rental[:actions].each do |action|
+                    it 'each action has a \'who\', \'type\' and \'amount\' key' do
+                        expect(action).to have_key(:who)
+                        expect(action[:who]).to be_instance_of(String)
+                        expect(action[:who]).to match(/(driver)|(owner)|(insurance)|(assistance)|(drivy)/)
+                        expect(action).to have_key(:type)
+                        expect(action[:type]).to be_instance_of(String)
+                        expect(action[:type]).to match(/(debit)|(credit)/)
+                        expect(action).to have_key(:amount)
+                        expect(action[:amount]).to be_instance_of(Integer)
+                    end
+
+                    it 'each action has a \'who\', \'type\' and \'amount\' key' do
+                        expect(action).to have_key(:who)
+                        expect(action[:who]).to be_instance_of(String)
+                        expect(action).to have_key(:type)
+                        expect(action[:type]).to be_instance_of(String)
+                        expect(action).to have_key(:amount)
+                        expect(action[:amount]).to be_instance_of(Integer)
+                    end
+                end
             end
         end
 
+        first_rental_driver_action = rentals[0][:actions].select { |action| action[:who] == 'driver' }[0]
         it 'has correct price and commission' do
-            expect(rentals[0][:price]).to eq(3000)
-            expect(rentals[1][:price]).to eq(6800)
-            expect(rentals[2][:price]).to eq(27800)
-        end
-
-        it 'has correct commission' do
-            expect(rentals[0][:commission]).to eq({insurance_fee: 450, assistance_fee: 100, drivy_fee: 350})
-            expect(rentals[1][:commission]).to eq({insurance_fee: 1020, assistance_fee: 200, drivy_fee: 820})
-            expect(rentals[2][:commission]).to eq({insurance_fee: 4170, assistance_fee: 1200, drivy_fee: 2970})
+            expect(first_rental_driver_action[:type]).to eq('debit')
+            expect(first_rental_driver_action[:amount]).to be(3000)
         end
     end
 
