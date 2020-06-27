@@ -1,4 +1,4 @@
-require_relative '../level1/lib/read_input_module'
+require_relative '../level2/lib/read_input_module'
 
 describe 'Read file method' do
     method = ReadInput.read_file
@@ -28,7 +28,7 @@ describe 'Get cars Array from input' do
     end
 
     it 'should have 3 elements' do
-        expect(get_cars.length).to eq(3)
+        expect(get_cars.length).to eq(1)
     end
 
     it 'should be the correct data' do
@@ -51,6 +51,6 @@ describe 'Get rentals Array from input' do
     end
 
     it 'should be the correct data' do
-        expect(get_rentals[0]).to eq({ "id": 1, "car_id": 1, "start_date": "2017-12-8", "end_date": "2017-12-10", "distance": 100 })
+        expect(get_rentals[0]).to eq({ "id": 1, "car_id": 1, "start_date": "2015-12-8", "end_date": "2015-12-8", "distance": 100 })
     end
 end

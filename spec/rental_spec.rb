@@ -1,5 +1,5 @@
-require_relative '../level1/lib/rental'
-require_relative '../level1/lib/car'
+require_relative '../level2/lib/rental'
+require_relative '../level2/lib/car'
 
 rental = Rental.new 1, Car.new(1,2000,10), "2017-12-8", "2017-12-10", 100
 
@@ -20,6 +20,7 @@ describe 'Rental objects' do
     # We should here check that Rentals attribute cannot be changed.
 
     it "can compute price" do
-        expect(rental.send(:get_price)).to eq(7000) # 3 days for 2000 each + 100km for 10 each
+        expect(rental.send(:set_price)).to eq(6600) # 3 days for (2000 + 2*2000-10%) + 100km for 10 each
+        expect(rental.send(:set_price).class).to be(Integer)
     end
 end
