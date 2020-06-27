@@ -1,4 +1,4 @@
-require_relative '../level3/lib/car'
+require_relative '../level4/lib/car'
 
 describe 'Car objects' do
     it 'can be instantiated with three arguments' do
