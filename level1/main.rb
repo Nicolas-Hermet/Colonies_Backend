@@ -20,3 +20,9 @@ end
 def car_from_its_id car_id
     $cars[$cars.index{|c| c.id === car_id}]
 end
+
+def write_output
+    output = {rentals: []}
+    $rentals.each{|r| output[:rentals].push({id: r.id, price: r.price})}
+    output
+end
