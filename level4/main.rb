@@ -2,6 +2,7 @@ $:.unshift File.expand_path("./../lib", __FILE__)
 require 'read_input_module'
 require 'Car'
 require 'Rental'
+require 'Action'
 
 $MAIN_ROOT = File.dirname __FILE__
 
@@ -31,7 +32,7 @@ end
 
 def write_output
     output = {rentals: []}
-    $rentals.each{|r| output[:rentals].push({id: r.id, price: r.price, commission: r.commission})}
+    $rentals.each{|r| output[:rentals].push({id: r.id, actions: r.actions})}
     File.open("#{$MAIN_ROOT}/data/actual_output.json",'w') do |f|
         f.write(output.to_json)
     end
