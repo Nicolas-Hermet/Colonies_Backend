@@ -16,6 +16,6 @@ class Rental
     private
 
     def get_price
-        @car.price_per_day * (@end_date - @start_date).to_i + @car.price_per_km * @distance
+        @car.price_per_day * ((@end_date - @start_date) + 1).to_i + @car.price_per_km * @distance
     end
 end
