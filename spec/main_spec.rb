@@ -72,4 +72,14 @@ describe 'Main write_output' do
         end
     end
 
+    path_to_file = "#{$MAIN_ROOT}/data/actual_output.json"
+
+    it 'create a new file' do
+        expect(File.exist?(path_to_file)).to be(true)
+    end
+
+    it 'output file is not empty' do
+        expect(File.size(path_to_file)).to be > 0
+    end
+
 end
