@@ -20,7 +20,7 @@ describe 'Rental objects' do
     # We should here check that Rentals attribute cannot be changed.
 
     it "can compute price" do
-        expect(rental.send(:get_price)).to eq(6600) # 3 days for (2000 + 2*2000-10%) + 100km for 10 each
-        expect(rental.send(:get_price).class).to be(Integer)
+        expect(rental.send(:set_price)).to eq(6600) # 3 days for (2000 + 2*2000-10%) + 100km for 10 each
+        expect(rental.send(:set_price).class).to be(Integer)
     end
 end

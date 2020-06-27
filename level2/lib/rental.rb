@@ -10,12 +10,12 @@ class Rental
         @end_date = Date.parse(end_date)
         @distance = distance
 
-        @price = get_price
+        @price = set_price
     end
 
     private
 
-    def get_price
+    def set_price
         price = 0
         duration = (@end_date - @start_date).to_i + 1
         car_price = @car.price_per_day
