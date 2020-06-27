@@ -6,6 +6,13 @@ require 'Rental'
 $MAIN_ROOT = File.dirname __FILE__
 $cars = []
 $rentals = []
+
+def perform
+    create_cars_array_from_input
+    create_rentals_array_from_input
+    write_output
+end
+
 def create_cars_array_from_input
     ReadInput.get_cars_from_input.each do |car|
         $cars.push(Car.new(car[:id], car[:price_per_day], car[:price_per_km]))
@@ -30,3 +37,5 @@ def write_output
     end
     output
 end
+
+perform
