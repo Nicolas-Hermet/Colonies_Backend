@@ -1,4 +1,4 @@
-require_relative '../level3/lib/read_input_module'
+require_relative '../level4/lib/read_input_module'
 
 describe 'Read file method' do
     method = ReadInput.read_file
