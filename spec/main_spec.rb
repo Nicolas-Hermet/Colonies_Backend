@@ -44,3 +44,30 @@ describe 'Main car_from_its_id' do
         expect(actual_car.price_per_km).to be(should_be_car.price_per_km)
     end
 end
+
+describe 'Main write_output' do
+    returned_output = write_output
+    it 'has a returned value' do
+        expect(returned_output).not_to eq(NIL)
+    end
+
+    it 'returned value has rentals key' do
+        expect(returned_output).to have_key(:rentals)
+        expect(returned_output[:rentals]).to be_instance_of(Array)
+    end
+
+    describe 'rentals array' do
+        rentals = returned_output[:rentals]
+        it 'has three objects' do
+            expect(returned_output[:rentals].length).to be(3)
+        end
+    
+        it 'has an id and price key for each object' do
+            rentals.each do |rental|
+                expect(rental).to have_key(:id)
+                expect(rental).to have_key(:price)
+            end
+        end
+    end
+
+end
