@@ -4,10 +4,10 @@ require 'Car'
 require 'Rental'
 
 $MAIN_ROOT = File.dirname __FILE__
-$cars = []
-$rentals = []
 
 def perform
+    $cars = []
+    $rentals = []
     create_cars_array_from_input
     create_rentals_array_from_input
     write_output
