@@ -70,9 +70,9 @@ describe 'Main write_output' do
         end
 
         it 'has correct price' do
-            expect(rentals[0]).to eq({id: 1, price: 7000})
-            expect(rentals[1]).to eq({id: 2, price: 15500})
-            expect(rentals[2]).to eq({id: 3, price: 11250})
+            expect(rentals[0]).to eq({id: 1, price: 3000})
+            expect(rentals[1]).to eq({id: 2, price: 6800})
+            expect(rentals[2]).to eq({id: 3, price: 27800})
         end
     end
 
