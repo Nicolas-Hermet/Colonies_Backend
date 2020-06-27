@@ -2,7 +2,6 @@ require_relative '../level3/lib/rental'
 require_relative '../level3/lib/car'
 
 rental = Rental.new 1, Car.new(1,2000,10), "2017-12-8", "2017-12-10", 100
-puts "#{rental.commission}"
 
 describe 'Rental objects' do
     it 'can be instantiated with three arguments' do
