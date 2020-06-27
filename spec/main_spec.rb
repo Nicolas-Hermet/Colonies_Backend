@@ -1,4 +1,4 @@
-require_relative '../level2/main'
+require_relative '../level3/main'
 
 describe 'Main create_cars_array_from_input' do
     it 'should not raise any error' do
@@ -62,10 +62,16 @@ describe 'Main write_output' do
             expect(returned_output[:rentals].length).to be(3)
         end
     
-        it 'has an id and price key for each object' do
+        it 'has an id price, and commission key for each object' do
             rentals.each do |rental|
                 expect(rental).to have_key(:id)
                 expect(rental).to have_key(:price)
+                expect(rental).to have_key(:commission)
+                it 'commission key has insurance_fee assistance_fee and drivy_fee keys' do
+                    expect(rental[:commission]).to have_key(:insurance_fee)
+                    expect(rental[:commission]).to have_key(:assistance_fee)
+                    expect(rental[:commission]).to have_key(:drivy_fee)
+                end
             end
         end
 
@@ -73,6 +79,12 @@ describe 'Main write_output' do
             expect(rentals[0]).to eq({id: 1, price: 3000})
             expect(rentals[1]).to eq({id: 2, price: 6800})
             expect(rentals[2]).to eq({id: 3, price: 27800})
+        end
+
+        it 'has correct commission' do
+            expect(rentals[0][:commission]).to eq({insurance_fee: 450, assistance_fee: 100, drivy_fee: 350})
+            expect(rentals[1][:commission]).to eq({insurance_fee: 1020, assistance_fee: 200, drivy_fee: 820})
+            expect(rentals[2][:commission]).to eq({insurance_fee: 4170, assistance_fee: 1200, drivy_fee: 2970})
         end
     end
 
