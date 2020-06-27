@@ -67,18 +67,16 @@ describe 'Main write_output' do
                 expect(rental).to have_key(:id)
                 expect(rental).to have_key(:price)
                 expect(rental).to have_key(:commission)
-                it 'commission key has insurance_fee assistance_fee and drivy_fee keys' do
-                    expect(rental[:commission]).to have_key(:insurance_fee)
-                    expect(rental[:commission]).to have_key(:assistance_fee)
-                    expect(rental[:commission]).to have_key(:drivy_fee)
-                end
+                expect(rental[:commission]).to have_key(:insurance_fee)
+                expect(rental[:commission]).to have_key(:assistance_fee)
+                expect(rental[:commission]).to have_key(:drivy_fee)
             end
         end
 
-        it 'has correct price' do
-            expect(rentals[0]).to eq({id: 1, price: 3000})
-            expect(rentals[1]).to eq({id: 2, price: 6800})
-            expect(rentals[2]).to eq({id: 3, price: 27800})
+        it 'has correct price and commission' do
+            expect(rentals[0][:price]).to eq(3000)
+            expect(rentals[1][:price]).to eq(6800)
+            expect(rentals[2][:price]).to eq(27800)
         end
 
         it 'has correct commission' do
