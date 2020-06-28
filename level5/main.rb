@@ -9,6 +9,7 @@ $MAIN_ROOT = File.dirname __FILE__
 def perform
     $cars = []
     $rentals = []
+    $options = []
     create_cars_array_from_input
     create_rentals_array_from_input
     write_output
@@ -28,6 +29,16 @@ end
 
 def car_from_its_id car_id
     $cars[$cars.index{|c| c.id === car_id}]
+end
+
+def create_options_array_from_input
+    ReadInput.get_options_from_input.each do |option|
+        $options.push(Option.new(option[:id], rental_from_its_id(option[:rental_id]), option[:type]))
+    end
+end
+
+def rental_from_its_id rental_id
+    $rentals[$rentals.index{|c| c.id === rental_id}]
 end
 
 def write_output
