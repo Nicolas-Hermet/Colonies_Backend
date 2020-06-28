@@ -44,6 +44,37 @@ describe 'Main car_from_its_id' do
     end
 end
 
+describe 'Main create_options_array_from_input' do
+    it 'should not raise any error' do
+        expect{create_options_array_from_input}.not_to raise_error
+    end
+
+    it 'should create an actual array of Option objects from the input' do
+        expect(create_options_array_from_input.class).to eq(Array)
+    end
+    
+    it 'should contain only Option Objects' do
+        random_index = rand($options.length - 1)
+        expect($options[random_index]).to be_instance_of(Option)
+    end
+end
+
+describe 'Main rental_from_its_id' do
+    it 'get a rental from $rentals thanks to an id' do
+        expect(rental_from_its_id 1).to be_instance_of(Rental)
+    end
+
+    it 'get the right rental from $rentals' do
+        actual_rental = rental_from_its_id(1)
+        should_be_rental = Rental.new(1,car_from_its_id(1),"2015-12-8","2015-12-8",100)
+        expect(actual_rental.id).to be(should_be_rental.id)
+        expect(actual_rental.car).to be(should_be_rental.car)
+        expect(actual_rental.start_date).to eq(should_be_rental.start_date)
+        expect(actual_rental.end_date).to eq(should_be_rental.end_date)
+        expect(actual_rental.distance).to be(should_be_rental.distance)
+    end
+end
+
 describe 'Main write_output' do
     returned_output = write_output
     
