@@ -1,4 +1,4 @@
-require_relative '../level4/main'
+require_relative '../level5/main'
 
 describe 'Main create_cars_array_from_input' do
     it 'should not raise any error' do
@@ -44,6 +44,37 @@ describe 'Main car_from_its_id' do
     end
 end
 
+describe 'Main create_options_array_from_input' do
+    it 'should not raise any error' do
+        expect{create_options_array_from_input}.not_to raise_error
+    end
+
+    it 'should create an actual array of Option objects from the input' do
+        expect($options.class).to eq(Array)
+    end
+    
+    it 'should contain only Option Objects' do
+        random_index = rand($options.length - 1)
+        expect($options[random_index]).to be_instance_of(Option)
+    end
+end
+
+describe 'Main rental_from_its_id' do
+    it 'get a rental from $rentals thanks to an id' do
+        expect(rental_from_its_id 1).to be_instance_of(Rental)
+    end
+
+    it 'get the right rental from $rentals' do
+        actual_rental = rental_from_its_id(1)
+        should_be_rental = Rental.new(1,car_from_its_id(1),"2015-12-8","2015-12-8",100)
+        expect(actual_rental.id).to be(should_be_rental.id)
+        expect(actual_rental.car).to be(should_be_rental.car)
+        expect(actual_rental.start_date).to eq(should_be_rental.start_date)
+        expect(actual_rental.end_date).to eq(should_be_rental.end_date)
+        expect(actual_rental.distance).to be(should_be_rental.distance)
+    end
+end
+
 describe 'Main write_output' do
     returned_output = write_output
     
@@ -64,12 +95,14 @@ describe 'Main write_output' do
 
         describe 'each rental and Action' do
             rentals.each do |rental|
-                it 'has an id integer and an actions array of Actions for each item' do
+                it 'has an id integer, an array of options and an array of actions for each item' do
                     expect(rental).to have_key(:id)
                     expect(rental[:id]).to be_instance_of(Integer)
                     expect(rental).to have_key(:actions)
                     expect(rental[:actions]).to be_instance_of(Array)
                     expect(rental[:actions].length).to be(5)
+                    expect(rental).to have_key(:options)
+                    expect(rental[:options]).to be_instance_of(Array)
                 end
 
                 rental[:actions].each do |action|
@@ -93,13 +126,24 @@ describe 'Main write_output' do
                         expect(action[:amount]).to be_instance_of(Integer)
                     end
                 end
+
+                rental[:options].each do |option|
+                    it 'each option is either a gps or baby_seat or additional_insurance' do
+                        expect(option).to be_instance_of(String)
+                        expect(option).to match(/(gps)|(baby_seat)|(additional_insurance)/)
+                    end
+
+                    it 'options have no duplicate' do
+                        expect(rental[:options].count(option)).to eq(1)
+                    end
+                end
             end
         end
 
         first_rental_driver_action = rentals[0][:actions].select { |action| action[:who] == 'driver' }[0]
         it 'has correct price and commission' do
             expect(first_rental_driver_action[:type]).to eq('debit')
-            expect(first_rental_driver_action[:amount]).to be(3000)
+            expect(first_rental_driver_action[:amount]).to eq(3700) # 3000 of rentals + 500+200 from options
         end
     end
 
