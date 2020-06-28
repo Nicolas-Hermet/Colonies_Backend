@@ -1,7 +1,7 @@
 require 'date'
 
 class Rental
-    attr_reader :id, :car, :start_date, :end_date, :distance, :price, :commission, :actions
+    attr_reader :id, :car, :start_date, :end_date, :distance, :price, :commission, :actions, :options
 
     def initialize id, car, start_date, end_date, distance
         @id = id 
@@ -11,10 +11,20 @@ class Rental
         @duration = (@end_date - @start_date).to_i + 1
         @distance = distance
         @actions = []
+        @options = []
+        @payment_benificiary = {'gps'=>:owner, 'baby_seat'=>:owner, 'additional_insurance'=>:drivy}
+        @options_amount_per_day = {'gps'=>500, 'baby_seat'=>200, 'additional_insurance'=>1000}
 
         set_price
         set_commission
         set_actions
+    end
+    
+    def add_option option
+        @options.push(option.type)
+        benificiary = @payment_benificiary[option.type]
+        @actions[@actions.index{|a| a[:who] == benificiary.to_s}][:amount] += @options_amount_per_day[option.type] * @duration
+        @actions[@actions.index{|a| a[:who] == 'driver'}][:amount] += @options_amount_per_day[option.type] * @duration
     end
 
     private
