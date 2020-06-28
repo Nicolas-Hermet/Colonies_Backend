@@ -3,6 +3,7 @@ require 'read_input_module'
 require 'Car'
 require 'Rental'
 require 'Action'
+require 'Option'
 
 $MAIN_ROOT = File.dirname __FILE__
 
@@ -12,6 +13,8 @@ def perform
     $options = []
     create_cars_array_from_input
     create_rentals_array_from_input
+    create_options_array_from_input
+    add_options_to_rentals
     write_output
 end
 
@@ -37,13 +40,19 @@ def create_options_array_from_input
     end
 end
 
+def add_options_to_rentals
+    $options.each do |option|
+        option.rental.add_option option
+    end
+end
+
 def rental_from_its_id rental_id
     $rentals[$rentals.index{|c| c.id === rental_id}]
 end
 
 def write_output
     output = {rentals: []}
-    $rentals.each{|r| output[:rentals].push({id: r.id, actions: r.actions})}
+    $rentals.each{|r| output[:rentals].push({id: r.id, options: r.options, actions: r.actions})}
     File.open("#{$MAIN_ROOT}/data/actual_output.json",'w') do |f|
         f.write(output.to_json)
     end
