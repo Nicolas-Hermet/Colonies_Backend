@@ -15,4 +15,8 @@ module ReadInput
     def self.get_rentals_from_input
         read_file[:rentals]
     end
+
+    def self.get_options_from_input
+        read_file[:options]
+    end
 end
