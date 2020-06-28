@@ -50,4 +50,19 @@ describe 'Rental objects' do
         expect(rental.actions[0][:type]).to eq('debit')
         expect(rental.actions[0][:amount]).to be(6600)
     end
+
+    describe 'Options attribute' do
+        it 'has options attribute as an Array of Option' do
+            expect(rental).to respond_to(:options)
+            expect{rental.options}.not_to raise_error
+            expect(rental.options).to be_instance_of(Array)
+        end
+
+        it 'has an add_option method' do
+            option = Option.new 1, rental, 'gps'
+            expect(rental).to respond_to(:add_option)
+            expect{rental.add_option option}.to change{rental.actions[0][:amount]}.from(6600).to(8100)
+            expect(rental.options[0]).to eq('gps')
+        end
+    end
 end
