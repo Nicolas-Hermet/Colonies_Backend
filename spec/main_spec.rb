@@ -50,7 +50,7 @@ describe 'Main create_options_array_from_input' do
     end
 
     it 'should create an actual array of Option objects from the input' do
-        expect(create_options_array_from_input.class).to eq(Array)
+        expect($options.class).to eq(Array)
     end
     
     it 'should contain only Option Objects' do
@@ -95,12 +95,14 @@ describe 'Main write_output' do
 
         describe 'each rental and Action' do
             rentals.each do |rental|
-                it 'has an id integer and an actions array of Actions for each item' do
+                it 'has an id integer, an array of options and an array of actions for each item' do
                     expect(rental).to have_key(:id)
                     expect(rental[:id]).to be_instance_of(Integer)
                     expect(rental).to have_key(:actions)
                     expect(rental[:actions]).to be_instance_of(Array)
                     expect(rental[:actions].length).to be(5)
+                    expect(rental).to have_key(:options)
+                    expect(rental[:options]).to be_instance_of(Array)
                 end
 
                 rental[:actions].each do |action|
@@ -124,13 +126,24 @@ describe 'Main write_output' do
                         expect(action[:amount]).to be_instance_of(Integer)
                     end
                 end
+
+                rental[:options].each do |option|
+                    it 'each option is either a gps or baby_seat or additional_insurance' do
+                        expect(option).to be_instance_of(String)
+                        expect(option).to match(/(gps)|(baby_seat)|(additional_insurance)/)
+                    end
+
+                    it 'options have no duplicate' do
+                        expect(rental[:options].count(option)).to eq(1)
+                    end
+                end
             end
         end
 
         first_rental_driver_action = rentals[0][:actions].select { |action| action[:who] == 'driver' }[0]
         it 'has correct price and commission' do
             expect(first_rental_driver_action[:type]).to eq('debit')
-            expect(first_rental_driver_action[:amount]).to be(3000)
+            expect(first_rental_driver_action[:amount]).to eq(3700) # 3000 of rentals + 500+200 from options
         end
     end
 
