@@ -15,6 +15,7 @@ describe 'Read file method' do
     it 'returned hash should have cars and rentals attributes' do
         expect(input).to have_key(:cars)
         expect(input).to have_key(:rentals)
+        expect(input).to have_key(:options)
     end
 end
 
