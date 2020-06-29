@@ -1,12 +1,14 @@
 require_relative '../level5/main'
 
+input = ReadInput.read_file
+
 describe 'Main create_cars_array_from_input' do
     it 'should not raise any error' do
-        expect{create_cars_array_from_input}.not_to raise_error
+        expect{create_cars_array_from_input input}.not_to raise_error
     end
 
     it 'should create an actual Car objects array from the input' do
-        expect(create_cars_array_from_input.class).to eq(Array)
+        expect(create_cars_array_from_input(input).class).to eq(Array)
     end
     
     it 'should contain only Car Objects' do
@@ -17,11 +19,11 @@ end
 
 describe 'Main create_rentals_array_from_input' do
     it 'should not raise any error' do
-        expect{create_rentals_array_from_input}.not_to raise_error
+        expect{create_rentals_array_from_input input}.not_to raise_error
     end
 
     it 'should create an actual Car objects array from the input' do
-        expect(create_rentals_array_from_input.class).to eq(Array)
+        expect(create_rentals_array_from_input(input).class).to eq(Array)
     end
     
     it 'should contain only Car Objects' do
@@ -46,7 +48,7 @@ end
 
 describe 'Main create_options_array_from_input' do
     it 'should not raise any error' do
-        expect{create_options_array_from_input}.not_to raise_error
+        expect{create_options_array_from_input input}.not_to raise_error
     end
 
     it 'should create an actual array of Option objects from the input' do
