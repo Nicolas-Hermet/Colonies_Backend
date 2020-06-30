@@ -28,7 +28,14 @@ describe 'Rental objects' do
         expect(rental.commission).to have_key(:drivy_fee)
     end
 
-    # We should here check that Rentals attribute cannot be changed.
+    it 'attributes cannot be modified from outside the rental class' do
+        expect{rental.id = -1}.to raise_error(NoMethodError)
+        expect{rental.car = -1}.to raise_error(NoMethodError)
+        expect{rental.start_date = '2000-01-21'}.to raise_error(NoMethodError)
+        expect{rental.end_date = '2000-01-21'}.to raise_error(NoMethodError)
+        expect{rental.distance = 666}.to raise_error(NoMethodError)
+        expect{rental.options = 2}.to raise_error(NoMethodError)
+    end
 
     it "can compute price" do
         expect(rental.send(:set_price)).to eq(6600) # 3 days for (2000 + 2*2000-10%) + 100km for 10 each

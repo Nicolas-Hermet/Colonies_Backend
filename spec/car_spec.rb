@@ -11,5 +11,9 @@ describe 'Car objects' do
         expect(car).to respond_to(:id, :price_per_day, :price_per_km)
     end
 
-    # We should here check that Cars attribute cannot be changed.
+    it 'attributes cannot be modified from outside the car class' do
+        expect{car.id = -1}.to raise_error(NoMethodError)
+        expect{car.price_per_day = 666}.to raise_error(NoMethodError)
+        expect{car.price_per_km = 666}.to raise_error(NoMethodError)
+    end
 end

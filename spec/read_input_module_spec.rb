@@ -1,24 +1,26 @@
 require_relative '../level5/lib/read_input_module'
 
+input = ReadInput.read_file
+
 describe 'Read file method' do
-    method = ReadInput.read_file
 
     it 'should not have any errors' do
-        expect{method}.not_to raise_error
+        expect{input}.not_to raise_error
     end
 
     it 'should return a Hash' do
-        expect(method.class).to eq(Hash)
+        expect(input.class).to eq(Hash)
     end
 
     it 'returned hash should have cars and rentals attributes' do
-        expect(method).to have_key(:cars)
-        expect(method).to have_key(:rentals)
+        expect(input).to have_key(:cars)
+        expect(input).to have_key(:rentals)
+        expect(input).to have_key(:options)
     end
 end
 
 describe 'Get cars Array from input' do
-    get_cars = ReadInput.get_cars_from_input
+    get_cars = ReadInput.get_cars_from_input input
     it 'should not raise any error' do
         expect{get_cars}.not_to raise_error
     end
@@ -37,7 +39,7 @@ describe 'Get cars Array from input' do
 end
 
 describe 'Get rentals Array from input' do
-    get_rentals = ReadInput.get_rentals_from_input
+    get_rentals = ReadInput.get_rentals_from_input input
     it 'should not raise any error' do
         expect{get_rentals}.not_to raise_error
     end
@@ -56,7 +58,7 @@ describe 'Get rentals Array from input' do
 end
 
 describe 'Get options Array from input' do
-    get_options = ReadInput.get_options_from_input
+    get_options = ReadInput.get_options_from_input input
     it 'should not raise any error' do
         expect{get_options}.not_to raise_error
     end
